@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    environment:
+      MYSQL_USER: docker
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: todo
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ../db/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - '3306:3306'
