@@ -14,5 +14,5 @@
     "jsx": "preserve",
     "paths": {"@/*": ["./*"]}
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "**/*.tsx"]
 }
