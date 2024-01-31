@@ -10,7 +10,7 @@ const Home = () => {
   const [todos, setTodos] = React.useState<tasks[]>([]);
 
   const fetchTodos = async (): Promise<tasks[]> => {
-    const res = await fetch('/api/todo', {method: 'GET'});
+    const res = await fetch('/api/tasks', {method: 'GET'});
     const data = await res.json();
     return data;
   };
@@ -20,18 +20,17 @@ const Home = () => {
   }, []);
 
   const handleEdit = (oldTask: tasks, newTitle: string, newContent: string) => {
-    fetch('/api/todo', {
-      method: 'POST',
+    fetch(`/api/tasks/${oldTask.id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: oldTask.id,
         newTitle: newTitle,
         newContent: newContent,
       }),
     }).then(res => {
-      if (res.status === 200) {
+      if (res.status === 200 || res.status === 204) {
         toast({
           title: `Task '${oldTask.title}' modified to '${newTitle}'.`,
           status: 'success',
@@ -49,7 +48,7 @@ const Home = () => {
   };
 
   const handleDelete = (task: tasks) => {
-    fetch('/api/todo', {
+    fetch(`/api/tasks/${task.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

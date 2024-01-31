@@ -1,4 +1,4 @@
-import {prisma} from '../../util/prisma';
+import {prisma} from '../../../util/prisma';
 
 import type {NextApiHandler, NextApiRequest, NextApiResponse} from 'next';
 
@@ -6,30 +6,22 @@ const handlar: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  // GET
-  if (req.method === 'GET') {
-    try {
-      const todos = await prisma.tasks.findMany();
-      res.status(200).json(todos);
-    } catch (e) {
-      res.status(500).json(e);
-    }
-  }
+  const {id} = req.query;
 
-  // POST
-  if (req.method === 'POST') {
+  // PUT
+  if (req.method === 'PUT') {
     const body = req.body;
     try {
       const updateTodo = await prisma.tasks.update({
         where: {
-          id: body.id,
+          id: Number(id),
         },
         data: {
           title: body.newTitle,
           content: body.newContent,
         },
       });
-      res.status(200).json(updateTodo);
+      res.status(204).json({});
     } catch (e) {
       res.status(500).json(e);
     }
@@ -37,10 +29,9 @@ const handlar: NextApiHandler = async (
 
   // DELETE
   if (req.method === 'DELETE') {
-    const body = req.body;
     try {
       const deleteTodo = await prisma.tasks.delete({
-        where: {id: body.id},
+        where: {id: Number(id)},
       });
       res.status(200).json(deleteTodo);
     } catch (e) {
