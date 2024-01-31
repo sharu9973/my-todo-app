@@ -32,7 +32,7 @@ const EditButton: React.FC<{
         <ModalContent>
           <ModalHeader>Edit Task</ModalHeader>
           <ModalBody>
-            <FormControl>
+            <FormControl mb={2}>
               <FormLabel>Title</FormLabel>
               <Input value={title} onChange={e => setTitle(e.target.value)} />
             </FormControl>
@@ -46,6 +46,7 @@ const EditButton: React.FC<{
           </ModalBody>
           <ModalFooter>
             <Button
+              mr={3}
               colorScheme="blue"
               onClick={() => {
                 onClose();
