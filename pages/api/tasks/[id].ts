@@ -21,7 +21,7 @@ const handlar: NextApiHandler = async (
           content: body.newContent,
         },
       });
-      res.status(204).json({});
+      res.status(204).end();
     } catch (e) {
       res.status(500).json(e);
     }

@@ -16,6 +16,20 @@ const handlar: NextApiHandler = async (
   }
 
   // POST
+  if (req.method === 'POST') {
+    const body = req.body;
+    try {
+      const insertTodo = await prisma.tasks.create({
+        data: {
+          title: body.title,
+          content: body.content,
+        },
+      });
+      res.status(200).json(insertTodo);
+    } catch (e) {
+      res.status(500).json(e);
+    }
+  }
 };
 
 export default handlar;

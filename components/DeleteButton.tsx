@@ -12,6 +12,7 @@ import {
   Text,
   HStack,
 } from '@chakra-ui/react';
+import {DeleteIcon} from '@chakra-ui/icons';
 
 const DeleteButton: React.FC<{
   taskName: string;
@@ -20,7 +21,7 @@ const DeleteButton: React.FC<{
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <React.Fragment>
-      <Button onClick={onOpen} colorScheme="pink">
+      <Button onClick={onOpen} leftIcon={<DeleteIcon />} colorScheme="pink">
         Delete
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>

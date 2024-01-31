@@ -1,37 +1,35 @@
-import React from 'react';
-import {tasks} from '@prisma/client';
 import {
   Button,
+  Modal,
   FormControl,
   FormLabel,
   Input,
-  Modal,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  ModalFooter,
 } from '@chakra-ui/react';
-import {EditIcon} from '@chakra-ui/icons';
+import {AddIcon} from '@chakra-ui/icons';
+import React from 'react';
 
-const EditButton: React.FC<{
-  oldTask: tasks;
-  onEdit: (newTitle: string, newContent: string) => void;
-}> = ({oldTask, onEdit}) => {
+const CreateButton: React.FC<{
+  handleCreate: (title: string, content: string) => void;
+}> = ({handleCreate}) => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const [title, setTitle] = React.useState(oldTask.title);
-  const [content, setContent] = React.useState(oldTask.content);
+  const [title, setTitle] = React.useState('');
+  const [content, setContent] = React.useState('');
 
   return (
     <React.Fragment>
-      <Button onClick={onOpen} leftIcon={<EditIcon />} colorScheme="blue">
-        Edit
+      <Button mb={8} leftIcon={<AddIcon />} onClick={onOpen}>
+        New Task
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit Task</ModalHeader>
+          <ModalHeader>New Task</ModalHeader>
           <ModalBody>
             <FormControl mb={2}>
               <FormLabel>Title</FormLabel>
@@ -51,7 +49,7 @@ const EditButton: React.FC<{
               colorScheme="blue"
               onClick={() => {
                 onClose();
-                onEdit(title, content);
+                handleCreate(title, content);
               }}
             >
               Submit
@@ -66,4 +64,4 @@ const EditButton: React.FC<{
   );
 };
 
-export default EditButton;
+export default CreateButton;

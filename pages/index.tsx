@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import {Stack, Heading, Box, Center, useToast} from '@chakra-ui/react';
 import Task from '@/components/Task';
+import CreateButton from '@/components/CreateButton';
 
 import type {tasks} from '@prisma/client';
 
@@ -18,6 +19,32 @@ const Home = () => {
   React.useEffect(() => {
     fetchTodos().then(todos => setTodos(todos));
   }, []);
+
+  const handleCreate = (title: string, content: string) => {
+    fetch('/api/tasks', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        title: title,
+        content: content,
+      }),
+    }).then(res => {
+      if (res.status === 200) {
+        toast({
+          title: 'Succeed!',
+          status: 'success',
+          isClosable: true,
+        });
+        fetchTodos().then(todos => setTodos(todos));
+      } else {
+        toast({
+          title: 'Failed.',
+          status: 'warning',
+          isClosable: true,
+        });
+      }
+    });
+  };
 
   const handleEdit = (oldTask: tasks, newTitle: string, newContent: string) => {
     fetch(`/api/tasks/${oldTask.id}`, {
@@ -83,6 +110,9 @@ const Home = () => {
         <Box margin="2.0rem 1.5rem">
           <Center>
             <Heading mb="8">MY TODO APP</Heading>
+          </Center>
+          <Center>
+            <CreateButton handleCreate={handleCreate} />
           </Center>
           <Center>
             <Stack width="20rem" spacing="4">
