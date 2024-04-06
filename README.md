@@ -4,6 +4,13 @@ My TODO app with docker-compose and prisma.
 
 ```bash
 docker compose -f docker/docker-compose.yml up
+npx prisma db push
+```
+
+## Run
+
+```bash
+npm run dev
 ```
 
 ## Environment
