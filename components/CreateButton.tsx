@@ -52,7 +52,7 @@ const CreateButton: React.FC<{
                 handleCreate(title, content);
               }}
             >
-              Submit
+              Create
             </Button>
             <Button variant="ghost" onClick={onClose}>
               Cancel
